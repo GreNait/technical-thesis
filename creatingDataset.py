@@ -1,14 +1,11 @@
 
 #%%
-from __future__ import absolute_import, division, print_function, unicode_literals
-import tensorflow as tf
+# from __future__ import absolute_import, division, print_function, unicode_literals
+# import tensorflow as tf
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
-print("TensorFlow version: {}".format(tf.__version__))
-print("Eager execution: {}".format(tf.executing_eagerly()))
+# from tensorflow.keras.models import Sequential
+# from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
+# from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 import os
 import numpy as np
@@ -17,7 +14,7 @@ import cv2
 
 #%%
 #Specifiying the path, where the image data is stored
-path_to_figures = "/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection"
+path_to_figures = "/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/overfitting"
 
 #%%
 # The names of the figures must be the same as the folder containing them
@@ -56,7 +53,7 @@ plt.show()
 training_data = []
 
 def creatingData():
-    figures = ["batman", "deadpool", "ironman"]
+    figures = ["batman", "deadpool"]
 
     for figure in figures:
         path = os.path.join(path_to_figures, figure)
@@ -108,8 +105,8 @@ X = np.array(X).reshape(-1, img_width, img_heigth, 3)
 # %%
 # Because we will tweak the model later on, we save the images
 # so we do not have to reshape, normalize, etc. everything again
-np.save('/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/training_data/training_data_X', X)
-np.save('/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/training_data/training_data_y', y)
+np.save('/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/training_data/overfitting/training_data_X', X)
+np.save('/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/training_data/overfitting/training_data_y', y)
 
 
 # %%
