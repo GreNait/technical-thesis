@@ -1,5 +1,19 @@
 ﻿# Technical Thesis
 ---
+
+# Status quo
+
+---
+
+You find the status quo of this technical thesis within the status_quo presentation.
+
+<https://github.com/GreNait/technical-thesis/blob/develop/status_quo.pptx>
+
+---
+
+# Milestones of the technical thesis
+---
+
 ## First milestone: First model
 ---
 <https://github.com/GreNait/technical-thesis/issues/4>
