@@ -14,10 +14,9 @@ You find the status quo of this technical thesis within the status_quo presentat
 ---
 
 # Milestones of the technical thesis
----
 
 ## First milestone: First model
----
+
 <https://github.com/GreNait/technical-thesis/issues/4>
 
 <https://github.com/GreNait/technical-thesis/issues/15>
