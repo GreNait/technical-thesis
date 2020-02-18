@@ -7,6 +7,7 @@
 <https://github.com/GreNait/technical-thesis/issues/15>
 
 <https://github.com/GreNait/technical-thesis/issues/5>
+
 ---
 ## Second milestone: Augmentation of images
 ---
