@@ -107,8 +107,3 @@ X = np.array(X).reshape(-1, img_width, img_heigth, 3)
 # so we do not have to reshape, normalize, etc. everything again
 np.save('/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/training_data/overfitting/training_data_X', X)
 np.save('/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/training_data/overfitting/training_data_y', y)
-
-
-# %%
-def addNoise(img_array):
-    return random_noise(img_array[0], mode='gaussian')
