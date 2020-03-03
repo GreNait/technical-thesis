@@ -8,117 +8,72 @@ from numpy import expand_dims
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.layers import GaussianNoise
+from skimage.util import random_noise
 
-path_to_figures = "/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/overfitting"
-
-# The names of the figures must be the same as the folder containing them
-# we use these names to get the folder and load the data later into the 
-# dataset.
-figures = ["batman", "deadpool"]
+IMG_HEIGHT, IMG_WIDTH = 150,113
 
 # %%
-img_array = []
+def left_right(move=[-200,200]):
+    return ImageDataGenerator(rescale=1./255,width_shift_range=move,fill_mode= "constant",cval=255)
 
-for figure in figures:
-    path = os.path.join(path_to_figures, figure)
-    
-    for img in os.listdir(path):
-        img_array.append(cv2.imread(os.path.join(path,img)))
-        break
-    break
+def up_down(range):
+    return ImageDataGenerator(rescale=1./255,height_shift_range=range, fill_mode= "constant",cval=255)
 
-# %%
-def left_right(images, move=[-200,200]):
-    samples = expand_dims(images, 0)
-    datagen = ImageDataGenerator(width_shift_range=move)
-    it = datagen.flow(samples, batch_size = 1)
+def flip_horizontal():
+    return ImageDataGenerator(rescale=1./255,horizontal_flip = True, fill_mode= "constant",cval=255)
 
-    batch = it.next()
-    image = batch[0].astype('uint8')
-    plt.imshow(image)
+def flip_vertical():
+    return ImageDataGenerator(rescale=1./255,vertical_flip = True, fill_mode= "constant",cval=255)
+
+def randomRotation():
+    return ImageDataGenerator(rescale=1./255,rotation_range = 180, fill_mode= "constant",cval=255)
+
+def randomBrightness(range=[0.2,1.0]):
+    return ImageDataGenerator(rescale=1./255,brightness_range=range)
+
+def randomZoom(range=[0.5,1.0]):
+    return ImageDataGenerator(rescale=1./255,zoom_range=range)
+
+def allAugmentations(move=[-20,20], height_shift_range=[-20,20], constant_value = 255, rotation_range = 180, brightness_range=[0.2,1.0],random_zoom_range=[0.7,1.3]):
+    return ImageDataGenerator(  rescale=1./255,
+                                width_shift_range=move,
+                                height_shift_range = height_shift_range,
+                                horizontal_flip = True,
+                                vertical_flip = True,
+                                rotation_range = rotation_range,
+                                brightness_range=brightness_range,
+                                fill_mode= "constant",
+                                cval=constant_value)
+
+def loadDataIntoDatagen(path, batch_size, datagen):
+    return datagen.flow_from_directory( batch_size=batch_size,
+                                        directory=path,
+                                        shuffle=True,
+                                        target_size=(IMG_HEIGHT, IMG_WIDTH),
+                                        class_mode='binary')
+
+
+def showImage(img_array):
+    fig, axes = plt.subplots(1, 5, figsize=(IMG_HEIGHT,IMG_WIDTH))
+    axes = axes.flatten()
+    for img, ax in zip( img_array, axes):
+        ax.imshow(img)
+        ax.axis('off')
+    plt.tight_layout()
     plt.show()
 
-left_right(img_array[0])
-left_right(img_array[0],[200,-200])
+def returnTrainDataGenerator():
+    path_to_test_set = "/home/grenait/Desktop/technical_thesis/technical-thesis/test_set/"
+    training_image_generator = allAugmentations()
+    train_data_gen = loadDataIntoDatagen(path_to_test_set, 15, training_image_generator)
 
-# %%
-def up_down(images, range):
-    samples = expand_dims(images, 0)
-    datagen = ImageDataGenerator(height_shift_range=range, fill_mode= "constant")
-    it = datagen.flow(samples, batch_size = 1)
+    # Displaying the first 5 images
+    sample_training_images, _ = next(train_data_gen)
+    showImage(sample_training_images[:5])
 
-    batch = it.next()
-    image = batch[0].astype('uint8')
-    plt.imshow(image)
-    plt.show()
+    return train_data_gen
 
-up_down(img_array[0], 0.5)
-up_down(img_array[0], -0.5)
+def returnValidationDataGenerator():
+    pass
 
-# %%
-def flip_horizontal(images):
-    samples = expand_dims(images, 0)
-    datagen = ImageDataGenerator(horizontal_flip = True, fill_mode= "constant")
-    it = datagen.flow(samples, batch_size = 1)
-
-    batch = it.next()
-    image = batch[0].astype('uint8')
-    plt.imshow(image)
-    plt.show()
-
-flip_horizontal(img_array[0])
-
-# %%
-def flip_vertical(images):
-    samples = expand_dims(images, 0)
-    datagen = ImageDataGenerator(vertical_flip = True, fill_mode= "constant")
-    it = datagen.flow(samples, batch_size = 1)
-
-    batch = it.next()
-    image = batch[0].astype('uint8')
-    plt.imshow(image)
-    plt.show()
-
-flip_vertical(img_array[0])
-
-# %%
-def randomRotation(images):
-    samples = expand_dims(images, 0)
-    datagen = ImageDataGenerator(rotation_range = 180, fill_mode= "constant")
-    it = datagen.flow(samples, batch_size = 1)
-
-    batch = it.next()
-    image = batch[0].astype('uint8')
-    plt.imshow(image)
-    plt.show()
-
-randomRotation(img_array[0])
-
-# %%
-def randomBrightness(images, range=[0.2,1.0]):
-    samples = expand_dims(images, 0)
-    datagen = ImageDataGenerator(brightness_range=range)
-    it = datagen.flow(samples, batch_size = 1)
-
-    batch = it.next()
-    image = batch[0].astype('uint8')
-    plt.imshow(image)
-    plt.show()
-
-randomBrightness(img_array[0])
-
-
-# %%
-def randomZoom(images, range=[0.5,1.0]):
-    samples = expand_dims(images, 0)
-    datagen = ImageDataGenerator(zoom_range=range)
-    it = datagen.flow(samples, batch_size = 1)
-
-    batch = it.next()
-    image = batch[0].astype('uint8')
-    plt.imshow(image)
-    plt.show()
-
-randomZoom(img_array[0])
-
-# %%

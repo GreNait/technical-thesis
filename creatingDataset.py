@@ -110,3 +110,5 @@ np.save('/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/
 
 
 # %%
+def addNoise(img_array):
+    return random_noise(img_array[0], mode='gaussian')
