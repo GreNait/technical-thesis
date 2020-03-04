@@ -9,7 +9,6 @@ from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.layers import GaussianNoise
-from skimage.util import random_noise
 
 IMG_HEIGHT, IMG_WIDTH = 150,113
 
@@ -35,7 +34,7 @@ def randomBrightness(range=[0.2,1.0]):
 def randomZoom(range=[0.5,1.0]):
     return ImageDataGenerator(rescale=1./255,zoom_range=range)
 
-def allAugmentations(move=[-20,20], height_shift_range=[-20,20], constant_value = 255, rotation_range = 180, brightness_range=[0.2,1.0],random_zoom_range=[0.7,1.3]):
+def allAugmentations(move=[-20,20], height_shift_range=[-20,20], constant_value = 255, rotation_range = 180, brightness_range=[0.2,1.0],random_zoom_range=[0.7,1.3], vsplit=0.2):
     return ImageDataGenerator(  rescale=1./255,
                                 width_shift_range=move,
                                 height_shift_range = height_shift_range,
@@ -44,14 +43,16 @@ def allAugmentations(move=[-20,20], height_shift_range=[-20,20], constant_value 
                                 rotation_range = rotation_range,
                                 brightness_range=brightness_range,
                                 fill_mode= "constant",
+                                validation_split = vsplit,
                                 cval=constant_value)
 
-def loadDataIntoDatagen(path, batch_size, datagen):
+def loadDataIntoDatagen(path, batch_size, datagen, subset):
     return datagen.flow_from_directory( batch_size=batch_size,
                                         directory=path,
                                         shuffle=True,
                                         target_size=(IMG_HEIGHT, IMG_WIDTH),
-                                        class_mode='binary')
+                                        class_mode='binary',
+                                        subset=subset)
 
 
 def showImage(img_array):
@@ -66,14 +67,20 @@ def showImage(img_array):
 def returnTrainDataGenerator():
     path_to_test_set = "/home/grenait/Desktop/technical_thesis/technical-thesis/test_set/"
     training_image_generator = allAugmentations()
-    train_data_gen = loadDataIntoDatagen(path_to_test_set, 15, training_image_generator)
+    train_data_gen = loadDataIntoDatagen(path_to_test_set, 15, training_image_generator, 'training')
 
-    # Displaying the first 5 images
-    sample_training_images, _ = next(train_data_gen)
-    showImage(sample_training_images[:5])
+    # # Displaying the first 5 images
+    # sample_training_images, _ = next(train_data_gen)
+    # showImage(sample_training_images[:5])
 
     return train_data_gen
 
 def returnValidationDataGenerator():
-    pass
+    path_to_test_set = "/home/grenait/Desktop/technical_thesis/technical-thesis/test_set/"
+    validation_image_generator = allAugmentations()
+    validation_data_gen = loadDataIntoDatagen(path_to_test_set, 15, validation_image_generator, 'validation')
 
+    return validation_data_gen
+
+
+# %%

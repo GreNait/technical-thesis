@@ -51,9 +51,3 @@ except Exception as e:
 finally:
     video.release()
     cv2.destroyAllWindows()
-
-
-    
-    
-    
-
