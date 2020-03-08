@@ -29,18 +29,22 @@ total_val = 577
 
 # %%
 model = Sequential([
-    Conv2D(16, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
+    Conv2D(16, 3, padding='same', activation='sigmoid', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
     MaxPooling2D(),
     Dropout(0.1),
-    Conv2D(32, 3, padding='same', activation='relu'),
+    Conv2D(32, 3, padding='same', activation='sigmoid'),
     MaxPooling2D(),
     Dropout(0.1),
-    Conv2D(64, 3, padding='same', activation='relu'),
+    Conv2D(64, 3, padding='same', activation='sigmoid'),
     MaxPooling2D(),
     Dropout(0.1),
     Flatten(),
-    Dense(512, activation='relu'),
-    Dense(1)
+    Dense(512, activation='sigmoid'),
+    Dropout(0.1),
+    Dense(256, activation='sigmoid'),
+    Dropout(0.1),
+    Dense(128, activation='sigmoid'),
+    Dense(2)
 ])
 
 # %%
@@ -55,7 +59,7 @@ cp_callback = tf.keras.callbacks.ModelCheckpoint(
 )
 # %%
 model.compile(optimizer='adam',
-              loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 model.summary()
 
@@ -95,3 +99,6 @@ plt.show()
 # %%
 # Saving the model
 model.save(str(Path.cwd() / "trained_models" / "second_model.h5"))
+
+
+# %%

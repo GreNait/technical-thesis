@@ -13,20 +13,28 @@ path_to_image = "/home/grenait/Desktop/technical_thesis/technical-thesis/smartPh
 path_to_other_image = "/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/deadpool/2020-01-31 15:47:02_deadpool.png"
 path_to_model = "/home/grenait/Desktop/technical_thesis/technical-thesis/trained_models/second_model.h5"
 # %%
-img = cv2.imread(path_to_image)
-img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img = cv2.resize(img, (150,113))
-plt.imshow(img)
-plt.show()
-img = img.reshape(-1,150,113,3)
-img = img / 255
-print(img)
+def reshapeImages(path):
+    img = cv2.imread(path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = cv2.resize(img, (150,113))
+    plt.imshow(img)
+    plt.show()
+    img = img.reshape(-1,150,113,3)
+    img = img / 255
+    return img
 
+# %%
+test_images = []
+test_images.append(reshapeImages(path_to_image))
+test_images.append(reshapeImages(path_to_other_image))
 # %%
 model = tf.keras.models.load_model(str(path_to_model))
+probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
 
 # %%
-prediction = model.predict([img,])
-print(prediction)
+prediction = probability_model.predict(test_images)
+
+print(np.argmax(prediction))
+
 
 # %%
