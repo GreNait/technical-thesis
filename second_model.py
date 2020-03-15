@@ -4,6 +4,7 @@ print(tf.__version__)
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
 from tensorflow.keras.callbacks import TensorBoard
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import time
 import augmentation_tf
@@ -28,24 +29,13 @@ total_train = 2313
 total_val = 577
 
 # %%
-model = Sequential([
-    Conv2D(16, 3, padding='same', activation='sigmoid', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
-    MaxPooling2D(),
-    Dropout(0.1),
-    Conv2D(32, 3, padding='same', activation='sigmoid'),
-    MaxPooling2D(),
-    Dropout(0.1),
-    Conv2D(64, 3, padding='same', activation='sigmoid'),
-    MaxPooling2D(),
-    Dropout(0.1),
-    Flatten(),
-    Dense(512, activation='sigmoid'),
-    Dropout(0.1),
-    Dense(256, activation='sigmoid'),
-    Dropout(0.1),
-    Dense(128, activation='sigmoid'),
-    Dense(2)
-])
+def secondModel():
+    model = Sequential([
+        Flatten(input_shape=(IMG_HEIGHT, IMG_WIDTH, 3)),
+        Dense(150, activation='relu'),
+        Dense(3)
+    ])
+    return model
 
 # %%
 # Saving the model in checkpoints is valuable if somethin happens during the training
@@ -58,6 +48,8 @@ cp_callback = tf.keras.callbacks.ModelCheckpoint(
     period=3
 )
 # %%
+model = secondModel()
+
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
@@ -97,8 +89,20 @@ plt.title('Training and Validation Loss')
 plt.show()
 
 # %%
+test_gen = ImageDataGenerator(rescale=1./255)
+test_gen = test_gen.flow_from_directory( batch_size=4,
+                                        directory="/home/grenait/Desktop/technical_thesis/technical-thesis/testin_prediction_set",
+                                        target_size=(IMG_HEIGHT, IMG_WIDTH),
+                                        class_mode=None)
+
+propability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
+prediction = propability_model.predict(test_gen)
+print(prediction)
+# %%
+for i in prediction:
+    print(np.argmax(i))
+# %%
 # Saving the model
 model.save(str(Path.cwd() / "trained_models" / "second_model.h5"))
-
 
 # %%

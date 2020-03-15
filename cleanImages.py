@@ -10,7 +10,8 @@ import matplotlib.pyplot as plt
 import matplotlib
 from datetime import datetime
 
-figures = ["batman", "deadpool"]
+# "batman", "deadpool"
+figures = ["antman"]
 dataCollection_folder = Path("/home/grenait/Desktop/technical_thesis/technical-thesis/dataCollection/")
 saving_folder = Path("/home/grenait/Desktop/technical_thesis/technical-thesis/test_set/")
 
