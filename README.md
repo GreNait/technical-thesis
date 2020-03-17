@@ -17,9 +17,11 @@ You find the status quo of this technical thesis within the status_quo presentat
 ## First milestone: First model
 
 All issues:
+
 <https://github.com/GreNait/technical-thesis/milestone/1>
 
 Issues seperated:
+
 <https://github.com/GreNait/technical-thesis/issues/4>
 
 <https://github.com/GreNait/technical-thesis/issues/15>
@@ -31,9 +33,11 @@ Issues seperated:
 ## Second milestone: Augmentation of images
 
 All issues:
+
 <https://github.com/GreNait/technical-thesis/milestone/2>
 
 Issues seperated:
+
 <https://github.com/GreNait/technical-thesis/issues/17>
 
 <https://github.com/GreNait/technical-thesis/issues/10>
@@ -45,9 +49,11 @@ Issues seperated:
 ## Third milestone: Second model
 
 All issues:
+
 <https://github.com/GreNait/technical-thesis/milestone/4>
 
 Issues seperated:
+
 <https://github.com/GreNait/technical-thesis/issues/26>
 
 <https://github.com/GreNait/technical-thesis/issues/25>
@@ -63,9 +69,11 @@ Issues seperated:
 ## Fourth milestone: Model differences
 
 All issues:
+
 <https://github.com/GreNait/technical-thesis/milestone/5>
 
 Issues seperated:
+
 <https://github.com/GreNait/technical-thesis/issues/19>
 
 <https://github.com/GreNait/technical-thesis/issues/29>
@@ -75,9 +83,11 @@ Issues seperated:
 ## Fith milestone: Third model
 
 All issues:
+
 <https://github.com/GreNait/technical-thesis/milestone/6>
 
 Issues seperated:
+
 <https://github.com/GreNait/technical-thesis/issues/21>
 
 ---
@@ -85,9 +95,11 @@ Issues seperated:
 # Due date technical thesis 21. June 2020
 
 All issues:
+
 <https://github.com/GreNait/technical-thesis/milestone/3>
 
 Issues seperated:
+
 <https://github.com/GreNait/technical-thesis/issues/11>
 
 <https://github.com/GreNait/technical-thesis/issues/12>
