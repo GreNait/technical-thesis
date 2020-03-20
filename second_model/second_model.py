@@ -33,6 +33,7 @@ def secondModel():
     model = Sequential([
         Flatten(input_shape=(IMG_HEIGHT, IMG_WIDTH, 3)),
         Dense(150, activation='relu'),
+        Dense(150, activation='relu'),
         Dense(3)
     ])
     return model

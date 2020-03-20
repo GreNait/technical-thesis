@@ -4,8 +4,8 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 dataCollection
-*/.vscode/
-.vscode
+*/.vscode/*
+*.vscode*
 *training*
 *NormalizedData
 *logs*
